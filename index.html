@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Desuung Form</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/new.css" />
+		<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+		<link rel="icon" href="images/logo.png">
+
+		<!--Google Fonts-->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+	</head>
+	<style>
+		
+	</style>
+	<body class="is-preload">
+
+		<!-- Header -->
+		<header id="header" class="pt-1">
+			<h2>67th De-suung Registration Form</h2>
+		</header>
+
+		<!-- Registration Form -->
+		<div class="flex justify-center mt-10">
+			<form id="registration-form" action="#" method="post">
+				<!-- Full Name Field -->
+				<div>
+				<label for="full-name" class="block text-white font-semibold mb-2">Full Name</label>
+				<div class="flex items-center border border-white-300 rounded-lg bg-black-50 px-3 py-2">
+					<i class="fas fa-user text-gray-500 mr-3"></i>
+					<input type="text" id="full-name" name="full-name" placeholder="Enter your full name" required class="w-full outline-none bg-transparent">
+				</div>
+				</div>
+				<br>
+				<!-- Present Address Field -->
+				<div>
+					<label for="address" class="block text-white-700 font-semibold mb-2">Present Address</label>
+					<div class="flex items-center border border-gray-300 rounded-lg bg-black-50 px-3 py-2">
+						<i class="fas fa-map-marker-alt text-gray-500 mr-3"></i>
+						<select id="address" name="address" required class="w-full outline-none text-white-700">
+							<option value="" disabled selected>Choose Dzongkhag</option>
+							<option value="Bumthang">Bumthang</option>
+							<option value="Chhukha">Chhukha</option>
+							<option value="Dagana">Dagana</option>
+							<option value="Gasa">Gasa</option>
+							<option value="Haa">Haa</option>
+							<option value="Lhuntse">Lhuntse</option>
+							<option value="Mongar">Mongar</option>
+							<option value="Paro">Paro</option>
+							<option value="Pemagatshel">Pemagatshel</option>
+							<option value="Punakha">Punakha</option>
+							<option value="Samdrup Jongkhar">Samdrup Jongkhar</option>
+							<option value="Samtse">Samtse</option>
+							<option value="Sarpang">Sarpang</option>
+							<option value="Thimphu">Thimphu</option>
+							<option value="Trashigang">Trashigang</option>
+							<option value="Trashiyangtse">Trashiyangtse</option>
+							<option value="Trongsa">Trongsa</option>
+							<option value="Tsirang">Tsirang</option>
+							<option value="Wangdue Phodrang">Wangdue Phodrang</option>
+							<option value="Zhemgang">Zhemgang</option>
+						</select>
+					</div>
+				</div>
+				<br>
+				<div>
+					<label for="phone" class="block text-white-700 font-semibold mb-2">Phone Number</label>
+					<div class="flex items-center border border-gray-300 rounded-lg bg-black-50 px-3 py-2">
+						<i class="fas fa-phone text-gray-500 mr-3"></i>
+						<input type="text" id="phone" name="phone" placeholder="Enter your phone number" required class="w-full outline-none bg-transparent text-gray-700 placeholder-gray-400" maxlength="8" oninput="validatePhoneInput(event)">
+					</div>
+					<!-- Danger alert for phone validation -->
+					<div id="phone-error" class="hidden p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+						<span class="font-medium">Phone number must be exactly 8 digits and contain only numbers.</span>
+					</div>
+				</div>
+				<br>
+				<div>
+					<label for="cid" class="block text-white-700 font-semibold mb-2">Citizenship Identity Card</label>
+					<div class="flex items-center border border-gray-300 rounded-lg bg-black-50 px-3 py-2">
+						<i class="fas fa-id-card text-gray-500 mr-3"></i>
+						<input type="text" id="cid" name="cid" placeholder="Enter your CID" required class="w-full outline-none bg-transparent text-gray-700 placeholder-gray-400" maxlength="11" oninput="validateCidInput(event)">
+					</div>
+					<!-- Danger alert for CID validation -->
+					<div id="cid-error" class="hidden p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+						<span class="font-medium">CID must be exactly 11 digits and contain only numbers.</span>
+					</div>
+				</div>
+
+				<!-- Submit Button -->
+				<div class="text-center">
+					<button type="submit" id="submit-button" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 w-full">Register</button>
+				</div>
+
+				<!-- Success Overlay -->
+				<div id="overlay" class="hidden fixed inset-0 bg-gray-500 bg-opacity-50 z-40"></div>
+
+				<!-- Success Message -->
+				<div id="success-alert" class="hidden fixed inset-0 flex justify-center items-center z-50">
+				<div class="bg-white p-6 rounded-lg shadow-md max-w-sm w-full text-center">
+					<span id="success-message" class="font-medium text-lg text-green-800">Registration completed successfully!</span>
+					<div id="user-rank" class="mt-2 text-sm text-green-700 font-medium"></div>
+					<div class="mt-4">
+					<button id="close-alert" class="px-6 py-2 text-white bg-green-500 hover:bg-green-600 rounded-lg focus:outline-none">
+						OK
+					</button>
+					</div>
+				</div>
+				</div>
+
+			</form>
+		</div>
+
+		<!-- Footer -->
+		<footer id="footer" class="mt-10 text-center text-gray-600 text-sm">
+			<ul class="flex justify-center space-x-4">
+				<li><a href="https://twitter.com/desuung?lang=en" class="hover:text-blue-600"><i class="fab fa-twitter"></i> Twitter</a></li>
+				<li><a href="https://www.instagram.com/desuung_/?hl=en" class="hover:text-pink-600"><i class="fab fa-instagram"></i> Instagram</a></li>
+				<li><a href="https://www.facebook.com/DeSuungGuardiansofPeace" class="hover:text-blue-700"><i class="fab fa-facebook"></i> Facebook</a></li>
+				<li><a href="mailto:info@desuung.org.bt" class="hover:text-red-500"><i class="fa fa-envelope"></i> Email</a></li>
+			</ul>
+			<p>&copy; Desuung | Owned by: <a href="https://desuung.org.bt/" class="text-blue-500 hover:underline">Desuung Organization</a></p>
+		</footer>
+
+		<!-- Scripts -->
+		<script src="assets/js/main.js"></script>
+		<!-- Firebase Configuration -->
+		<script type="module" src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+		<script type="module" src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
+
+
+		<script type="module">
+			import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+			import { getFirestore, collection, addDoc, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+			
+			const firebaseConfig = {
+				apiKey: "AIzaSyCK3UPmNhbufZKwOHi3Oj2KPS6_gWbJxEA",
+				authDomain: "desuung-67th-batch.firebaseapp.com",
+				projectId: "desuung-67th-batch",
+				storageBucket: "desuung-67th-batch.appspot.com",
+				messagingSenderId: "1055406524401",
+				appId: "1:1055406524401:web:7a7912af4d9d97bb76e650",
+				measurementId: "G-HNS6TC6RHS"
+			};
+			
+			const app = initializeApp(firebaseConfig);
+			const db = getFirestore(app);
+			
+			document.addEventListener("DOMContentLoaded", function() {
+				const registrationForm = document.getElementById("registration-form");
+			
+				if (registrationForm) {
+				registrationForm.addEventListener("submit", async function(event) {
+					event.preventDefault();
+			
+					const submitButton = document.getElementById("submit-button");
+					submitButton.innerHTML = '<span class="spinner"></span> Sending...';
+					submitButton.disabled = true;
+			
+					const fullName = document.getElementById("full-name").value;
+					const address = document.getElementById("address").value;
+					const phoneNumber = document.getElementById("phone").value;
+					const cid = document.getElementById("cid").value;
+			
+					try {
+					// Get current number of documents to determine the rank
+					const snapshot = await getDocs(collection(db, "desuung_registration"));
+					const rank = snapshot.size + 1;
+			
+					await addDoc(collection(db, "desuung_registration"), {
+						fullName: fullName,
+						address: address,
+						phoneNumber: phoneNumber,
+						cid: cid,
+						rank: rank,  // Assigning rank based on document count
+						submittedAt: serverTimestamp()
+					});
+			
+					// Show success alert
+					const successAlert = document.getElementById("success-alert");
+					const successMessage = document.getElementById("success-message");
+					const userRank = document.getElementById("user-rank");
+			
+					successAlert.classList.remove("hidden");
+					successMessage.innerText = `Registration completed successfully!`;
+					userRank.innerText = `Your rank is: ${rank}`;
+			
+					// Display the success message and rank
+					const closeButton = document.getElementById("close-alert");
+					closeButton.addEventListener("click", function() {
+						location.reload();
+					});
+			
+					} catch (error) {
+					console.error("Error saving document: ", error);
+					alert("Error registering. Please try again.");
+					} finally {
+					// Reset button after a delay
+					setTimeout(() => {
+						submitButton.innerHTML = 'Register';
+						submitButton.disabled = false;
+					}, 2000); // Delay to allow user to see the success message
+					}
+				});
+				} else {
+				console.error("Registration form not found");
+				}
+			});
+			</script>
+		  
+		  
+		<script>
+			// Validate phone number input (only numeric and 8 digits max)
+			function validatePhoneInput(event) {
+				const phoneError = document.getElementById("phone-error");
+				let value = event.target.value;
+
+				// Allow only numbers (0-9)
+				value = value.replace(/[^0-9]/g, "");
+				event.target.value = value;
+
+				// Show error if the input exceeds 8 digits
+				if (value.length < 8) {
+					phoneError.classList.remove("hidden");
+				} else {
+					phoneError.classList.add("hidden");
+				}
+			}
+
+			// Validate CID input (only numeric and 11 digits exactly)
+			function validateCidInput(event) {
+				const cidError = document.getElementById("cid-error");
+				let value = event.target.value;
+		
+				// Allow only numbers (0-9)
+				value = value.replace(/[^0-9]/g, "");
+		
+				// Show error if the input is not a valid number or exceeds 11 digits
+				if (value.length < 11 || !/^\d+$/.test(value)) {
+					cidError.classList.remove("hidden");
+				} else {
+					cidError.classList.add("hidden");
+				}
+			}
+		</script>
+		
+	</body>
+</html>
