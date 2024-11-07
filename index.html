@@ -15,10 +15,10 @@
 		<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
 	</head>
 	<style>
-	#header h2{
-		font-size: 1.7em;
+		
+
 	</style>
-	<body class="is-preload">
+	<body class="is-preload" >
 
 		<!-- Header -->
 		<header id="header" class="pt-1">
@@ -73,6 +73,7 @@
 				<div id="success-alert" class="hidden fixed inset-0 flex justify-center items-center z-50">
 				<div class="bg-white p-6 rounded-lg shadow-md max-w-sm w-full text-center">
 					<span id="success-message" class="font-medium text-lg text-green-800">Registration completed successfully!</span>
+					<div id="user-cid" class="mt-2 text-sm text-green-700 font-medium"></div>
 					<div id="user-rank" class="mt-2 text-sm text-green-700 font-medium"></div>
 					<div class="mt-4">
 					<button id="close-alert" class="px-6 py-2 text-white bg-green-500 hover:bg-green-600 rounded-lg focus:outline-none">
@@ -151,9 +152,11 @@
 					const successAlert = document.getElementById("success-alert");
 					const successMessage = document.getElementById("success-message");
 					const userRank = document.getElementById("user-rank");
+					const userCID = document.getElementById("user-cid");
 			
 					successAlert.classList.remove("hidden");
 					successMessage.innerText = `Registration completed successfully!`;
+					userCID.innerText = `For CID: ${cid}`;
 					userRank.innerText = `Your rank is: ${rank}`;
 			
 					// Display the success message and rank
