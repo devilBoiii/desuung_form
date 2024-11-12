@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Desuung Form</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/signin.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" href="images/logo.png">
+
+    <!-- Font Awesome (CDN version to fix file not found error) -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+</head>
+
+<body class="is-preload">
+    <center>
+        <form class="login-form">
+            <p class="login-text">
+                <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-lock fa-stack-1x"></i>
+                </span>
+            </p>
+            <input type="email" class="login-username" autofocus="true" required="true" placeholder="Email" />
+            <input type="password" class="login-password" required="true" placeholder="Password" />
+            <input type="submit" name="Login" value="Login" class="login-submit" />
+        </form>
+        <div class="underlay-photo"></div>
+        <div class="underlay-black"></div>
+    </center>
+
+    <!-- Firebase Configuration with Compat Libraries -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+	<script>
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCK3UPmNhbufZKwOHi3Oj2KPS6_gWbJxEA",
+            authDomain: "desuung-67th-batch.firebaseapp.com",
+            projectId: "desuung-67th-batch",
+            storageBucket: "desuung-67th-batch.appspot.com",
+            messagingSenderId: "1055406524401",
+            appId: "1:1055406524401:web:7a7912af4d9d97bb76e650",
+            measurementId: "G-HNS6TC6RHS"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        function showAlert(message) {
+            const alertBox = document.createElement("div");
+            alertBox.className = "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-center p-4 rounded shadow-lg";
+            alertBox.innerText = message;
+
+            document.body.appendChild(alertBox);
+
+            setTimeout(() => {
+                alertBox.remove();
+            }, 3000);
+        }
+
+        document.querySelector(".login-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = document.querySelector(".login-username").value;
+            const password = document.querySelector(".login-password").value;
+            const submitButton = document.querySelector(".login-submit");
+
+            submitButton.disabled = true;
+            submitButton.value = "Signing in...";
+            submitButton.classList.add("animate-pulse");
+
+            try {
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                // Redirect to dashboard on successful login
+                window.location.href = "dashboard.html";
+            } catch (error) {
+                console.error("Error during sign-in:", error);
+                showAlert("Invalid email or password. Please try again.");
+            } finally {
+                submitButton.disabled = false;
+                submitButton.value = "Login";
+                submitButton.classList.remove("animate-pulse");
+            }
+        });
+    </script>
+
+</body>
+</html>

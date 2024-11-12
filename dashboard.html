@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Desuung Form Dashboard</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/dashboard.css" />
+		<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+		<link rel="icon" href="images/logo.png">
+
+		<!--Google Fonts-->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+	</head>
+	<style>
+		.header__avatar {
+			background-image: url("images/bae.jpg");
+		}
+		.sidenav__profile-avatar {
+			background-image: url("images/bae.jpg");
+		}
+		.main-header{
+			background-image: url("images/bg07.jpg");
+		}
+	</style>
+	<body>
+	<div class="grid">
+		<header class="header">
+			<i class="fas fa-bars header__menu"></i>
+			<div class="header__search">
+			<input class="header__input" placeholder="Search..." />
+			</div>
+			<div class="header__avatar">
+		
+			</div>
+		</header>
+		
+		<aside class="sidenav">
+			<div class="sidenav__brand">
+			<i class="fas fa-feather-alt sidenav__brand-icon"></i>
+			<a class="sidenav__brand-link" href="#">Ux<span class="text-light">Pro</span></a>
+			<i class="fas fa-times sidenav__brand-close"></i>
+			</div>
+			<div class="sidenav__profile">
+			<div class="sidenav__profile-avatar"></div>
+			<div class="sidenav__profile-title text-light">Babeyla</div>
+			</div>
+			<div class="row row--align-v-center row--align-h-center">
+				<ul class="navList">
+					<li class="navList__heading"><button class="download-button bg-blue-500 text-white p-2 rounded">Download Desuung Registration</button>
+					</li>
+				</ul>
+			</div>
+		</aside>
+		
+		<main class="main">
+			<div class="main-header">
+			<div class="main-header__intro-wrapper">
+				<div class="main-header__welcome">
+				<div class="main-header__welcome-title text-light">Welcome, <strong>Babeyla</strong></div>
+				<div class="main-header__welcome-subtitle text-light">How are you today?</div>
+				</div>
+				<div class="quickview">
+				<div class="quickview__item">
+					<div class="quickview__item-total">41</div>
+					<div class="quickview__item-description">
+					<i class="far fa-calendar-alt"></i>
+					<span class="text-light">Events</span>
+					</div>
+				</div>
+				<div class="quickview__item">
+					<div class="quickview__item-total">64</div>
+					<div class="quickview__item-description">
+					<i class="far fa-comment"></i>
+					<span class="text-light">Messages</span>
+					</div>
+				</div>
+			</div>
+			</div>
+		</main>
+		
+		<footer class="footer">
+			<p><span class="footer__copyright">&copy;</span> 2024</p>
+			<p>Crafted with <i class="fas fa-heart footer__icon"></i> by <a href="https://devilboi-studio.vercel.app/">DevilBoi</a></p>
+		</footer>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
+		<script src="assets/js/dashboard.js"></script>
+		<script type="module">
+			import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+			import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+			
+			// Firebase configuration
+			const firebaseConfig = {
+				apiKey: "AIzaSyCK3UPmNhbufZKwOHi3Oj2KPS6_gWbJxEA",
+				authDomain: "desuung-67th-batch.firebaseapp.com",
+				projectId: "desuung-67th-batch",
+				storageBucket: "desuung-67th-batch.appspot.com",
+				messagingSenderId: "1055406524401",
+				appId: "1:1055406524401:web:7a7912af4d9d97bb76e650",
+				measurementId: "G-HNS6TC6RHS"
+			};
+			
+			// Initialize Firebase
+			const app = initializeApp(firebaseConfig);
+			const db = getFirestore(app);
+			
+			async function downloadDataAsExcel() {
+				const data = [];
+				const querySnapshot = await getDocs(collection(db, "desuung_registration"));
+			
+				querySnapshot.forEach((doc) => {
+				data.push(doc.data());
+				});
+			
+				// Convert data to a worksheet
+				const worksheet = XLSX.utils.json_to_sheet(data);
+				const workbook = XLSX.utils.book_new();
+				XLSX.utils.book_append_sheet(workbook, worksheet, "Desuung Registration");
+			
+				// Download the Excel file
+				XLSX.writeFile(workbook, "Desuung_Registration.xlsx");
+			}
+			
+			// Attach the download function to the button
+			document.querySelector(".download-button").addEventListener("click", downloadDataAsExcel);
+			</script>
+		  
+	</body>
+</html>
